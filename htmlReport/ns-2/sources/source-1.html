@@ -1,0 +1,199 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Polinom</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">DataModels</a>
+</div>
+
+<h1>Coverage Summary for Class: Polinom (DataModels)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Polinom</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (7/8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    95.7%
+  </span>
+  <span class="absValue">
+    (45/47)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package DataModels;
+&nbsp;
+&nbsp;import java.util.HashMap;
+&nbsp;import java.util.Map;
+&nbsp;import java.util.regex.Matcher;
+&nbsp;import java.util.regex.Pattern;
+&nbsp;
+&nbsp;public class Polinom {
+&nbsp;
+&nbsp;    private final HashMap&lt;Integer, Double&gt; monoame; //polinom &lt;exponent, coeficient&gt;
+&nbsp;
+<b class="fc">&nbsp;    public Polinom() {</b>
+<b class="fc">&nbsp;        monoame = new HashMap&lt;&gt;();</b>
+&nbsp;    }
+<b class="fc">&nbsp;    public Polinom(int exponent, double coeficient) {</b>
+<b class="fc">&nbsp;        monoame = new HashMap&lt;&gt;();</b>
+<b class="fc">&nbsp;        this.monoame.put(exponent, coeficient);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    public void placeMonom(int exponent, double coeficient) {
+&nbsp;
+<b class="fc">&nbsp;        this.monoame.put(exponent, coeficient);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public HashMap&lt;Integer, Double&gt; getPolinom() {
+<b class="fc">&nbsp;        return this.monoame;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String display() {
+<b class="fc">&nbsp;        StringBuilder sb = new StringBuilder();</b>
+<b class="fc">&nbsp;        for (Map.Entry&lt;Integer, Double&gt; entry : this.monoame.entrySet()) {</b>
+<b class="fc">&nbsp;            int exponent = entry.getKey();</b>
+<b class="fc">&nbsp;            double coefficient = entry.getValue();</b>
+<b class="fc">&nbsp;            if (coefficient != 0) {</b>
+<b class="fc">&nbsp;                if (exponent == 0) {</b>
+<b class="fc">&nbsp;                    sb.append(coefficient);</b>
+&nbsp;                } else {
+<b class="fc">&nbsp;                    sb.append(coefficient).append(&quot;x^&quot;).append(exponent);</b>
+&nbsp;                }
+<b class="fc">&nbsp;                sb.append(&quot; + &quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        if (!sb.isEmpty()) {</b>
+<b class="fc">&nbsp;            sb.setLength(sb.length() - 3);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            sb.append(&quot;0&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        return sb.toString();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Double getSpecificMonom(int x){
+<b class="fc">&nbsp;        return monoame.getOrDefault(x, 0.0);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void clear(){
+<b class="nc">&nbsp;        this.monoame.clear();</b>
+&nbsp;    }
+&nbsp;    public boolean processPolynomial(String polynomial) {
+<b class="fc">&nbsp;        boolean sem = false;</b>
+<b class="fc">&nbsp;        String monomPattern = &quot;([+-]?\\d*)x\\^?(\\d*)|([+-]?\\d*)x(?!\\^)|x&quot;;</b>
+&nbsp;        //group 1: coeficient, group 0: x^ , group 2:exponent
+<b class="fc">&nbsp;        String constantPattern = &quot;(?:^|[-+])\\d+(?![\\dx])&quot;;</b>
+&nbsp;
+<b class="fc">&nbsp;        Pattern p = Pattern.compile(monomPattern);</b>
+<b class="fc">&nbsp;        Matcher m = p.matcher(polynomial);</b>
+&nbsp;
+<b class="fc">&nbsp;        while (m.find()) {</b>
+<b class="fc">&nbsp;            String coefficientString = m.group(1) != null ? m.group(1) : m.group(3) != null ? m.group(3) : &quot;1&quot;;</b>
+<b class="fc">&nbsp;            if (coefficientString.equals(&quot;-&quot;)) {</b>
+<b class="fc">&nbsp;                coefficientString = &quot;-1&quot;;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            if (coefficientString.equals(&quot;+&quot;) || coefficientString.isBlank()) {</b>
+<b class="fc">&nbsp;                coefficientString = &quot;1&quot;;</b>
+&nbsp;            }
+<b class="fc">&nbsp;            double coefficient = Double.parseDouble(coefficientString);</b>
+&nbsp;
+<b class="fc">&nbsp;            String exponentString = m.group(2);</b>
+<b class="fc">&nbsp;            int exponent = exponentString != null &amp;&amp; !exponentString.isEmpty() ? Integer.parseInt(exponentString) : 1;</b>
+&nbsp;
+<b class="fc">&nbsp;            this.placeMonom(exponent, coefficient);</b>
+<b class="fc">&nbsp;            sem = getSpecificMonom(exponent) != null;</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+&nbsp;        // constanta
+<b class="fc">&nbsp;        Pattern cp = Pattern.compile(constantPattern);</b>
+<b class="fc">&nbsp;        Matcher cm = cp.matcher(polynomial);</b>
+<b class="fc">&nbsp;        while (cm.find()) {</b>
+<b class="fc">&nbsp;            double constant = Double.parseDouble(cm.group());</b>
+<b class="fc">&nbsp;            this.placeMonom(0, constant);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;
+<b class="fc">&nbsp;        return sem;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-19 22:02</div>
+</div>
+</body>
+</html>

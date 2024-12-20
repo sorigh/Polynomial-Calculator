@@ -1,0 +1,331 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Display</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">Interface</a>
+</div>
+
+<h1>Coverage Summary for Class: Display (Interface)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Display</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/130)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package Interface;
+&nbsp;
+&nbsp;import BusinessLogic.Operation;
+&nbsp;import DataModels.Polinom;
+&nbsp;
+&nbsp;import javax.swing.*;
+&nbsp;import java.awt.*;
+&nbsp;import java.awt.event.ActionEvent;
+&nbsp;import java.awt.event.ActionListener;
+&nbsp;
+&nbsp;public class Display extends JDialog implements ActionListener {
+&nbsp;
+&nbsp;    //polynomials
+<b class="nc">&nbsp;    Polinom pp1 = new Polinom();</b>
+<b class="nc">&nbsp;    Polinom pp2 = new Polinom();</b>
+<b class="nc">&nbsp;    Polinom ppRez = new Polinom();</b>
+<b class="nc">&nbsp;    Polinom ppRez2 = new Polinom();</b>
+&nbsp;    Polinom[] rez;
+&nbsp;    //panel
+&nbsp;    private final JPanel mainPanel;
+&nbsp;    //text fields
+&nbsp;    private JTextField inputTextField1;
+&nbsp;    private JTextField inputTextField2;
+&nbsp;    private JTextArea resultArea;
+&nbsp;
+&nbsp;    //combo box
+&nbsp;    private JComboBox&lt;String&gt; operationComboBox;
+&nbsp;
+&nbsp;    //buttons
+&nbsp;    private JButton calculateButton;
+&nbsp;    private JButton resetButton;
+&nbsp;    private JButton informationButton;
+&nbsp;
+&nbsp;    public Display(Frame parent){
+<b class="nc">&nbsp;        super(parent);</b>
+<b class="nc">&nbsp;        setTitle(&quot;Polynomial Calculator&quot;);</b>
+<b class="nc">&nbsp;        mainPanel = new JPanel();</b>
+<b class="nc">&nbsp;        setContentPane(mainPanel);</b>
+<b class="nc">&nbsp;        setMinimumSize(new Dimension(410, 450));</b>
+<b class="nc">&nbsp;        setModal(true);</b>
+<b class="nc">&nbsp;        setLocationRelativeTo(parent);</b>
+<b class="nc">&nbsp;        setDefaultCloseOperation(DISPOSE_ON_CLOSE);</b>
+<b class="nc">&nbsp;        setResizable(false);</b>
+&nbsp;
+<b class="nc">&nbsp;        createContent();</b>
+<b class="nc">&nbsp;        mainPanel.setBackground(new Color(87,108,133));</b>
+<b class="nc">&nbsp;        mainPanel.setLayout(null);</b>
+&nbsp;
+<b class="nc">&nbsp;        calculateButton.addActionListener(ae -&gt; {</b>
+&nbsp;
+<b class="nc">&nbsp;            pp1.clear();</b>
+<b class="nc">&nbsp;            pp2.clear();</b>
+<b class="nc">&nbsp;            ppRez.clear();</b>
+<b class="nc">&nbsp;            ppRez2.clear();</b>
+<b class="nc">&nbsp;            if (!pp1.processPolynomial(inputTextField1.getText()))</b>
+&nbsp;            {
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(null, &quot;Wrong input!&quot;, &quot;Something went wrong&quot;, JOptionPane.ERROR_MESSAGE);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            pp2.processPolynomial(inputTextField2.getText());</b>
+<b class="nc">&nbsp;            chooseOperation(operationComboBox.getSelectedIndex());</b>
+&nbsp;        });
+<b class="nc">&nbsp;        resetButton.addActionListener(ae -&gt; reset());</b>
+<b class="nc">&nbsp;        informationButton.addActionListener(ae -&gt; JOptionPane.showMessageDialog(null, &quot;accepted term with the format:\n [coefficient]x^[exponent] &quot;, &quot;Required format&quot;, JOptionPane.INFORMATION_MESSAGE));</b>
+&nbsp;
+<b class="nc">&nbsp;        this.setVisible(true);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private void createContent() {
+&nbsp;
+&nbsp;        //text fields
+<b class="nc">&nbsp;        inputTextField1 = new JTextField();</b>
+<b class="nc">&nbsp;        inputTextField1.setFont(new Font(&quot;Cambria Math&quot;,Font.BOLD,15));</b>
+<b class="nc">&nbsp;        inputTextField1.setBounds(20, 80, 200, 30);</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        inputTextField2 = new JTextField();</b>
+<b class="nc">&nbsp;        inputTextField2.setFont(new Font(&quot;Cambria Math&quot;,Font.BOLD,15));</b>
+<b class="nc">&nbsp;        inputTextField2.setBounds(20, 160, 200, 30);</b>
+&nbsp;
+<b class="nc">&nbsp;        resultArea = new JTextArea();</b>
+<b class="nc">&nbsp;        resultArea.setFont(new Font(&quot;Cambria Math&quot;,Font.BOLD,15));</b>
+<b class="nc">&nbsp;        resultArea.setBounds(20, 240, 350, 100);</b>
+<b class="nc">&nbsp;        resultArea.setEditable(false);</b>
+<b class="nc">&nbsp;        resultArea.setWrapStyleWord(true);</b>
+&nbsp;
+&nbsp;        //labels
+<b class="nc">&nbsp;        JLabel titleLabel = new JLabel();</b>
+<b class="nc">&nbsp;        titleLabel.setFont(new Font(&quot;Cambria Math&quot;,Font.BOLD,20));</b>
+<b class="nc">&nbsp;        titleLabel.setText(&quot;Polynomial Calculator&quot;);</b>
+<b class="nc">&nbsp;        titleLabel.setBounds(100, 10, 300, 30);</b>
+<b class="nc">&nbsp;        titleLabel.setForeground(new Color(223, 225, 229));</b>
+&nbsp;
+<b class="nc">&nbsp;        JLabel inputLabel1 = new JLabel();</b>
+<b class="nc">&nbsp;        inputLabel1.setFont(new Font(&quot;Cambria Math&quot;,Font.BOLD,15));</b>
+<b class="nc">&nbsp;        inputLabel1.setText(&quot;Polynomial 1:&quot;);</b>
+<b class="nc">&nbsp;        inputLabel1.setBounds(20, 60, 100, 20);</b>
+<b class="nc">&nbsp;        inputLabel1.setForeground(new Color(223, 225, 229));</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        JLabel inputLabel2 = new JLabel();</b>
+<b class="nc">&nbsp;        inputLabel2.setFont(new Font(&quot;Cambria Math&quot;,Font.BOLD,15));</b>
+<b class="nc">&nbsp;        inputLabel2.setText(&quot;Polynomial 2:&quot;);</b>
+<b class="nc">&nbsp;        inputLabel2.setBounds(20, 140, 100, 20);</b>
+<b class="nc">&nbsp;        inputLabel2.setForeground(new Color(223, 225, 229));</b>
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;        JLabel resultLabel = new JLabel();</b>
+<b class="nc">&nbsp;        resultLabel.setFont(new Font(&quot;Cambria Math&quot;,Font.BOLD,15));</b>
+<b class="nc">&nbsp;        resultLabel.setText(&quot;Result:&quot;);</b>
+<b class="nc">&nbsp;        resultLabel.setBounds(20, 210, 100, 20);</b>
+<b class="nc">&nbsp;        resultLabel.setForeground(new Color(223, 225, 229));</b>
+&nbsp;
+&nbsp;        //combo box
+<b class="nc">&nbsp;        String[] operations = {&quot;Operation&quot;,&quot;Add&quot;, &quot;Subtract&quot;, &quot;Multiply&quot;, &quot;Divide&quot;, &quot;Derive&quot;, &quot;Integrate&quot;};</b>
+<b class="nc">&nbsp;        operationComboBox = new JComboBox&lt;&gt;(operations);</b>
+<b class="nc">&nbsp;        operationComboBox.setBackground(new Color(93,64,27));</b>
+<b class="nc">&nbsp;        operationComboBox.setForeground(new Color(197,198,201));</b>
+<b class="nc">&nbsp;        operationComboBox.setFont(new Font(&quot;Cambria Math&quot;,Font.BOLD,15));</b>
+<b class="nc">&nbsp;        operationComboBox.setSelectedItem(1);</b>
+<b class="nc">&nbsp;        operationComboBox.setBounds(270, 120, 100, 30);</b>
+&nbsp;
+&nbsp;        //button
+<b class="nc">&nbsp;        calculateButton = new JButton();</b>
+<b class="nc">&nbsp;        calculateButton.setFont(new Font(&quot;Cambria Math&quot;,Font.BOLD,15));</b>
+<b class="nc">&nbsp;        calculateButton.setText(&quot;Calculate&quot;);</b>
+<b class="nc">&nbsp;        calculateButton.setBounds(270, 200, 100, 30);</b>
+<b class="nc">&nbsp;        calculateButton.setBackground(new Color(18,38,63));</b>
+<b class="nc">&nbsp;        calculateButton.setForeground(new Color(197,198,201));</b>
+&nbsp;
+<b class="nc">&nbsp;        resetButton = new JButton();</b>
+<b class="nc">&nbsp;        resetButton.setFont(new Font(&quot;Cambria Math&quot;,Font.BOLD,15));</b>
+<b class="nc">&nbsp;        resetButton.setText(&quot;Reset&quot;);</b>
+<b class="nc">&nbsp;        resetButton.setBounds(270, 350, 100, 30);</b>
+<b class="nc">&nbsp;        resetButton.setBackground(new Color(18,38,63));</b>
+<b class="nc">&nbsp;        resetButton.setForeground(new Color(197,198,201));</b>
+&nbsp;
+<b class="nc">&nbsp;        informationButton = new JButton();</b>
+<b class="nc">&nbsp;        informationButton.setFont(new Font(&quot;Cambria Math&quot;,Font.BOLD,15));</b>
+<b class="nc">&nbsp;        informationButton.setText(&quot;Info&quot;);</b>
+<b class="nc">&nbsp;        informationButton.setBounds(20, 350, 100, 30);</b>
+<b class="nc">&nbsp;        informationButton.setBackground(new Color(18,38,63));</b>
+<b class="nc">&nbsp;        informationButton.setForeground(new Color(197,198,201));</b>
+&nbsp;
+&nbsp;
+&nbsp;        //text fields
+<b class="nc">&nbsp;        mainPanel.add(inputTextField1);</b>
+<b class="nc">&nbsp;        mainPanel.add(inputTextField2);</b>
+<b class="nc">&nbsp;        mainPanel.add(resultArea);</b>
+&nbsp;
+&nbsp;
+&nbsp;        //labels
+<b class="nc">&nbsp;        mainPanel.add(titleLabel);</b>
+<b class="nc">&nbsp;        mainPanel.add(inputLabel1);</b>
+<b class="nc">&nbsp;        mainPanel.add(inputLabel2);</b>
+<b class="nc">&nbsp;        mainPanel.add(resultLabel);</b>
+&nbsp;
+&nbsp;        //combo box
+<b class="nc">&nbsp;        mainPanel.add(operationComboBox);</b>
+&nbsp;
+&nbsp;        //button
+<b class="nc">&nbsp;        mainPanel.add(calculateButton);</b>
+<b class="nc">&nbsp;        mainPanel.add(resetButton);</b>
+<b class="nc">&nbsp;        mainPanel.add(informationButton);</b>
+&nbsp;
+&nbsp;    }
+&nbsp;
+&nbsp;    public void reset(){
+<b class="nc">&nbsp;        pp1.clear();</b>
+<b class="nc">&nbsp;        pp2.clear();</b>
+<b class="nc">&nbsp;        ppRez.clear();</b>
+<b class="nc">&nbsp;        ppRez2.clear();</b>
+<b class="nc">&nbsp;        operationComboBox.setSelectedItem(1);</b>
+<b class="nc">&nbsp;        inputTextField1.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;        inputTextField2.setText(&quot;&quot;);</b>
+<b class="nc">&nbsp;        resultArea.setText(&quot;&quot;);</b>
+&nbsp;    }
+&nbsp;    public void chooseOperation(int selectedIndex){
+<b class="nc">&nbsp;        ppRez.clear();</b>
+<b class="nc">&nbsp;        ppRez2.clear();</b>
+<b class="nc">&nbsp;        switch (selectedIndex) {</b>
+&nbsp;            case 1: //&quot;Add&quot;
+<b class="nc">&nbsp;                ppRez = Operation.add(pp1,pp2);</b>
+<b class="nc">&nbsp;                break;</b>
+&nbsp;            case 2: //&quot;Subtract&quot;
+<b class="nc">&nbsp;                ppRez = Operation.subtract(pp1,pp2);</b>
+<b class="nc">&nbsp;                break;</b>
+&nbsp;            case 3: //&quot;Multiply&quot;
+<b class="nc">&nbsp;                ppRez = Operation.multiplication(pp1,pp2);</b>
+<b class="nc">&nbsp;                break;</b>
+&nbsp;            case 4:// &quot;Divide&quot;
+&nbsp;                try {
+<b class="nc">&nbsp;                    rez = Operation.division(pp1, pp2);</b>
+<b class="nc">&nbsp;                }catch (ArithmeticException e) {</b>
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(null, &quot;No division by 0 &quot;, &quot;Division by 0&quot;, JOptionPane.ERROR_MESSAGE);</b>
+<b class="nc">&nbsp;                }</b>
+<b class="nc">&nbsp;                break;</b>
+&nbsp;            case 5:// &quot;Derive&quot;
+<b class="nc">&nbsp;                ppRez = Operation.derivative(pp1);</b>
+<b class="nc">&nbsp;                ppRez2 = Operation.derivative(pp2);</b>
+&nbsp;
+<b class="nc">&nbsp;                break;</b>
+&nbsp;            case 6: //&quot;Integrate&quot;
+<b class="nc">&nbsp;                ppRez = Operation.integral(pp1);</b>
+<b class="nc">&nbsp;                ppRez2 = Operation.integral(pp2);</b>
+<b class="nc">&nbsp;                break;</b>
+&nbsp;            default:
+<b class="nc">&nbsp;                JOptionPane.showMessageDialog(null, &quot;Select a valid operation!&quot;, &quot;Error&quot;, JOptionPane.ERROR_MESSAGE);</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        if (selectedIndex &gt; 4)</b>
+<b class="nc">&nbsp;            resultArea.setText(&quot;\n&quot; + ppRez.display() +&quot;\n&quot; + ppRez2.display());</b>
+&nbsp;        else{
+<b class="nc">&nbsp;            if (selectedIndex == 4)</b>
+&nbsp;            {
+&nbsp;                //[0] e quotient, [1] remainder
+<b class="nc">&nbsp;                resultArea.setText(&quot;\nQuotient: &quot; + rez[0].display() +&quot;\nRemainder: &quot; + rez[1].display());</b>
+&nbsp;            }
+&nbsp;            else {
+<b class="nc">&nbsp;                resultArea.setText(&quot;\n&quot; + ppRez.display());</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;    @Override
+&nbsp;    public void actionPerformed(ActionEvent e) {
+&nbsp;
+<b class="nc">&nbsp;    }</b>
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-19 22:02</div>
+</div>
+</body>
+</html>
