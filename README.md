@@ -1,5 +1,6 @@
 # Polynomial-Calculator
-This project implements a Polynomial Calculator with a graphical user interface (GUI). Users can input two polynomials, select a mathematical operation to perform between them, and view the results in an intuitive and user-friendly interface. The application is designed with Object-Oriented Programming (OOP) principles to ensure scalability and maintainability.
+
+A Java-based Polynomial Calculator with a graphical user interface (GUI) that allows users to input two polynomials, select mathematical operations (addition, subtraction, multiplication, division, derivation, and integration), and view the results. The calculator uses a HashMap data structure to store polynomial terms and performs efficient operations on them. The application also includes input validation with regular expressions and unit testing for accuracy.
 
 ## Application Structure
 
